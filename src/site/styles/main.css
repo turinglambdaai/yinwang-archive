@@ -434,27 +434,13 @@ a:hover { color: var(--accent-hover); }
   text-decoration-color: var(--accent);
 }
 
-/* ---- Sidebar Ads (floating at viewport edges, not layout columns:
-     an unfilled AdSense slot reads as dead space when it occupies a
-     grid column, but as natural margin when it floats) ---- */
+/* ---- Page layout ----
+     (ads used to float at the viewport edges here; the ad frames are
+     gone and .page-layout/.page-body remain as plain page structure) */
 
 .page-layout {
   display: block;
   min-height: 100vh;
-}
-
-.ad-sidebar {
-  position: fixed;
-  top: 120px;
-  width: 160px;
-}
-
-.ad-sidebar--left {
-  left: calc((100vw - var(--max-w)) / 2 - 184px);
-}
-
-.ad-sidebar--right {
-  right: calc((100vw - var(--max-w)) / 2 - 184px);
 }
 
 .page-body {
@@ -462,10 +448,60 @@ a:hover { color: var(--accent-hover); }
   min-width: 0;
 }
 
-@media (max-width: 1299px) {
-  .ad-sidebar {
-    display: none;
-  }
+/* ---- Follow card (end-of-post WeChat CTA) ---- */
+
+.follow-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 2.4em 0 0;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.follow-card-qr {
+  flex-shrink: 0;
+  display: block;
+}
+
+.follow-card-qr img {
+  display: block;
+  width: 96px;
+  height: auto;
+  margin: 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.follow-card-text {
+  min-width: 0;
+}
+
+.follow-card-title {
+  margin: 0 0 4px;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.follow-card-text p:last-child {
+  margin: 0;
+  font-size: 0.88em;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.follow-card-text a {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+}
+
+.follow-card-text a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
 }
 
 /* ---- Footer ---- */
@@ -515,22 +551,6 @@ a:hover { color: var(--accent-hover); }
     padding: 16px 18px;
   }
   .post-card-date { order: -1; }
-}
-
-/* ---- Mobile Ad ---- */
-
-.ad-mobile {
-  display: none;
-  max-width: 100%;
-  overflow: hidden;
-}
-
-@media (max-width: 1299px) {
-  .ad-mobile {
-    display: block;
-    margin: 16px auto 24px;
-    min-height: 90px;
-  }
 }
 
 /* ---- Search Trigger (FAB) ---- */

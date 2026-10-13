@@ -109,7 +109,7 @@
 
   ;; assets
   (define src (site-src-dir root))
-  (for ([item (in-list '("favicon.svg" "robots.txt" "ads.txt" "CNAME" "wechat-qr.jpg"))])
+  (for ([item (in-list '("favicon.svg" "robots.txt" "CNAME" "wechat-qr.jpg"))])
     (define f (build-path src item))
     (when (file-exists? f)
       (copy-file f (build-path out item) #t)))

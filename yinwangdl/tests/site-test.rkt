@@ -24,6 +24,18 @@
   (check-false (string-contains? html "删除请求"))
   (check-false (string-contains? html "yinwangdl/issues")))
 
+(test-case "post page ends with a wechat follow card"
+  (define html (post-page post #f #f))
+  (check-true (string-contains? html "follow-card"))
+  (check-true (string-contains? html "src=\"/wechat-qr.jpg\"")))
+
+(test-case "ads are fully removed from every page"
+  (for ([html (in-list (list (post-page post #f #f) (wechat-page)))])
+    (check-false (string-contains? html "adsbygoogle"))
+    (check-false (string-contains? html "google-adsense-account"))
+    (check-false (string-contains? html "ad-sidebar"))
+    (check-false (string-contains? html "ad-mobile"))))
+
 (test-case "wechat page shows qr and account name"
   (define html (wechat-page))
   (check-true (string-contains? html "TuringLambdaAI"))

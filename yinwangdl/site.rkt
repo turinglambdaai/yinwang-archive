@@ -15,10 +15,8 @@
 
 (provide (all-defined-out))
 
-;; ---- constants (adsense / umami, from base.njk) ----
+;; ---- constants (umami, from base.njk) ----
 
-(define adsense-client "ca-pub-3215512126020129")
-(define adsense-slot "7014497615")
 (define umami-id "38c4a1f4-0780-448e-a6f3-2e614c245585")
 
 (define default-description
@@ -26,21 +24,9 @@
 
 ;; ---- shared snippets ----
 
-(define (ad-ins)
-  (format "    <ins class=\"adsbygoogle\"\n      style=\"display:block\"\n      data-ad-client=\"~a\"\n      data-ad-slot=\"~a\"\n      data-ad-format=\"auto\"\n      data-full-width-responsive=\"true\"></ins>\n      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>"
-          adsense-client adsense-slot))
-
-(define ad-aside-template
-  (string-append
-   "    <aside class=\"ad-sidebar ad-sidebar--left\">\n"
-   (ad-ins) "\n"
-   "    </aside>\n"))
-
-(define ad-mobile-template
-  (string-append
-   "      <div class=\"ad-mobile\">\n"
-   (ad-ins) "\n"
-   "      </div>\n"))
+;; The site no longer runs ads: AdSense script, meta tag, floating
+;; sidebars, mobile slot and ads.txt were all removed. Reader funnel is
+;; the WeChat account (end-of-post follow card + /wechat/ page).
 
 ;; ---- the two inline script blocks (verbatim from base.njk) ----
 
@@ -224,8 +210,6 @@ SCRIPT
    (format "  <link rel=\"canonical\" href=\"~a~a\">\n" site-base-url page-url)
    (format "  <link rel=\"alternate\" type=\"application/atom+xml\" title=\"~a\" href=\"/feed.xml\">\n"
            (html-escape-attr site-name))
-   (format "  <meta name=\"google-adsense-account\" content=\"~a\">\n" adsense-client)
-   (format "  <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=~a\"\n    crossorigin=\"anonymous\"></script>\n" adsense-client)
    (format "  <script defer src=\"https://cloud.umami.is/script.js\" data-website-id=\"~a\"></script>\n" umami-id)
    "  <script defer src=\"/vendor/highlight.min.js\"></script>\n"
    "  <script defer src=\"/vendor/lisp.min.js\"></script>\n"
@@ -236,7 +220,6 @@ SCRIPT
    "<body>\n"
    "  <div class=\"reading-progress\" id=\"reading-progress\" aria-hidden=\"true\"></div>\n"
    "  <div class=\"page-layout\">\n"
-   ad-aside-template
    "    <div class=\"page-body\">\n"
    (if compact-header
        (string-append
@@ -259,7 +242,6 @@ SCRIPT
    "      <main class=\"container\">\n"
    content "\n"
    "      </main>\n"
-   ad-mobile-template
    "      <footer class=\"site-footer\">\n"
    "        <div class=\"container\">\n"
    "          <p>内容版权归原作者所有 · 本站仅作备份存档</p>\n"
@@ -271,9 +253,6 @@ SCRIPT
    "        </div>\n"
    "      </footer>\n"
    "    </div>\n"
-   "    <aside class=\"ad-sidebar ad-sidebar--right\">\n"
-   (ad-ins) "\n"
-   "    </aside>\n"
    "  </div>\n"
    "\n"
    "<div id=\"search-overlay\" class=\"search-overlay\">\n"
@@ -304,6 +283,19 @@ SCRIPT
    search-script "\n"
    "</body>\n"
    "</html>\n"))
+
+;; End-of-post WeChat CTA — the reader funnel now that ads are gone.
+(define follow-card
+  (string-append
+   "  <aside class=\"follow-card\">\n"
+   "    <a class=\"follow-card-qr\" href=\"/wechat/\" aria-label=\"查看站长公众号介绍\">\n"
+   "      <img src=\"/wechat-qr.jpg\" alt=\"微信公众号 TuringLambdaAI 二维码\" width=\"96\" height=\"105\">\n"
+   "    </a>\n"
+   "    <div class=\"follow-card-text\">\n"
+   "      <p class=\"follow-card-title\">关注站长公众号</p>\n"
+   "      <p>站长在微信公众号 <strong>TuringLambdaAI</strong> 发布原创内容，微信扫描二维码关注，或<a href=\"/wechat/\">了解更多</a>。</p>\n"
+   "    </div>\n"
+   "  </aside>\n"))
 
 ;; ---- post page (post.njk) ----
 
@@ -361,6 +353,8 @@ SCRIPT
      "  <div class=\"post-content\">\n"
      (dict-ref p 'html) "\n"
      "  </div>\n"
+     "\n"
+     follow-card
      "\n"
      post-nav
      "</article>"))
