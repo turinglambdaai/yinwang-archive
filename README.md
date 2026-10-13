@@ -133,10 +133,7 @@ the content belongs to its author.
 The code (Racket package & workflows) is licensed under the MIT License;
 the archived posts remain copyrighted by their author — see [LICENSE](LICENSE).
 
-## Copyright & Takedown
+## Copyright
 
 All archived posts are copyrighted by their original author. This archive
-is kept for reading convenience; no content is sold or relicensed. If you
-are the copyright holder and want any content removed, please
-[open an issue](https://github.com/turinglambdaai/yinwangdl/issues) and it
-will be taken down promptly.
+is kept for reading convenience; no content is sold or relicensed.

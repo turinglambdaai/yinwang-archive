@@ -388,6 +388,11 @@ a:hover { color: var(--accent-hover); }
   border: 1px solid var(--border);
 }
 
+/* QR code on the wechat page — scannable size, not column-wide */
+.wechat-qr img {
+  width: 320px;
+}
+
 .post-content table {
   border-collapse: collapse;
   width: 100%;

@@ -264,11 +264,9 @@ SCRIPT
    "        <div class=\"container\">\n"
    "          <p>内容版权归原作者所有 · 本站仅作备份存档</p>\n"
    "          <p class=\"footer-links\">\n"
-   "            <a href=\"https://github.com/turinglambdaai/yinwangdl/issues\" target=\"_blank\" rel=\"noopener\">删除请求</a>\n"
-   "            <span class=\"sep\">&middot;</span>\n"
    "            <a href=\"/feed.xml\">RSS</a>\n"
    "            <span class=\"sep\">&middot;</span>\n"
-   "            <span>站长原创：公众号 <strong>TuringLambdaAI</strong></span>\n"
+   "            <a href=\"/wechat/\">站长原创：公众号 TuringLambdaAI</a>\n"
    "          </p>\n"
    "        </div>\n"
    "      </footer>\n"
@@ -372,6 +370,32 @@ SCRIPT
              #:created created
              #:compact-header #t
              #:page-url url
+             content))
+
+;; ---- wechat page (公众号专页 /wechat/) ----
+
+(define (wechat-page)
+  (define content
+    (string-append
+     "<article class=\"post\">\n"
+     "  <header class=\"post-header\">\n"
+     "    <h1>站长的微信公众号</h1>\n"
+     "    <div class=\"post-meta\">\n"
+     "      <span>站长原创内容</span>\n"
+     "    </div>\n"
+     "  </header>\n"
+     "  <div class=\"post-content\">\n"
+     "    <p>站长在微信公众号 <strong>TuringLambdaAI</strong> 发布原创内容，欢迎关注。</p>\n"
+     "    <p>微信扫描下方二维码，或在微信中搜索「TuringLambdaAI」。</p>\n"
+     "    <p class=\"wechat-qr\">\n"
+     "      <img src=\"/wechat-qr.jpg\" alt=\"微信扫描二维码关注公众号 TuringLambdaAI\" width=\"320\" height=\"352\">\n"
+     "    </p>\n"
+     "  </div>\n"
+     "</article>"))
+  (base-page #:title "站长的微信公众号"
+             #:description "站长原创内容的微信公众号 TuringLambdaAI，扫码或搜索关注"
+             #:compact-header #t
+             #:page-url "/wechat/"
              content))
 
 ;; ---- home page with year sections + pagination (index.njk) ----
@@ -495,7 +519,8 @@ SCRIPT
 (define (sitemap-xml posts page-count)
   (define urls
     (append
-     (list (cons "/" #f))
+     (list (cons "/" #f)
+           (cons "/wechat/" #f))
      (for/list ([n (in-range 1 page-count)])
        (cons (page-url n) #f))
      (for/list ([p (in-list posts)])

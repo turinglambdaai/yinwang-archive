@@ -126,6 +126,6 @@ source: https://www.yinwang.org/posts/my-blog-post
 
 仓库代码（Racket 包与工作流）基于 [MIT License](LICENSE) 开源；posts/ 下的博客内容版权归原作者所有，仅供个人存档阅读。
 
-## 版权与删除请求
+## 版权
 
-本站为备份存档，仅供阅读便利，不销售任何文章内容。若您是内容版权所有者并希望删除任何文章，请[提交 issue](https://github.com/turinglambdaai/yinwangdl/issues)，我们会尽快处理下架。
+本站为备份存档，仅供阅读便利，不销售任何文章内容，文章版权归原作者所有。

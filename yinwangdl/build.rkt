@@ -98,6 +98,9 @@
     (define newer (if (> i 0) (list-ref posts (- i 1)) #f))
     (write-page! out (dict-ref p 'url) (post-page p older newer)))
 
+  ;; wechat page (公众号专页)
+  (write-page! out "/wechat/" (wechat-page))
+
   ;; metadata outputs
   (write-utf8! (build-path out "feed.xml") (feed-xml posts))
   (write-utf8! (build-path out "search.json") (search-json posts))
