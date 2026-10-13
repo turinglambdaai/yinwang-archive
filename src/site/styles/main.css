@@ -448,62 +448,6 @@ a:hover { color: var(--accent-hover); }
   min-width: 0;
 }
 
-/* ---- Follow card (end-of-post WeChat CTA) ---- */
-
-.follow-card {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 2.4em 0 0;
-  padding: 18px 20px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-}
-
-.follow-card-qr {
-  flex-shrink: 0;
-  display: block;
-}
-
-.follow-card-qr img {
-  display: block;
-  width: 96px;
-  height: auto;
-  margin: 0;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-.follow-card-text {
-  min-width: 0;
-}
-
-.follow-card-title {
-  margin: 0 0 4px;
-  font-weight: 600;
-  font-size: 0.95em;
-}
-
-.follow-card-text p:last-child {
-  margin: 0;
-  font-size: 0.88em;
-  line-height: 1.7;
-  color: var(--text-2);
-}
-
-.follow-card-text a {
-  color: var(--text-2);
-  text-decoration: underline;
-  text-decoration-color: var(--border);
-  text-underline-offset: 3px;
-}
-
-.follow-card-text a:hover {
-  color: var(--accent);
-  text-decoration-color: var(--accent);
-}
-
 /* ---- Footer ---- */
 
 .site-footer {

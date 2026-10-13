@@ -284,18 +284,34 @@ SCRIPT
    "</body>\n"
    "</html>\n"))
 
-;; End-of-post WeChat CTA — the reader funnel now that ads are gone.
-(define follow-card
-  (string-append
-   "  <aside class=\"follow-card\">\n"
-   "    <a class=\"follow-card-qr\" href=\"/wechat/\" aria-label=\"查看站长公众号介绍\">\n"
-   "      <img src=\"/wechat-qr.jpg\" alt=\"微信公众号 TuringLambdaAI 二维码\" width=\"96\" height=\"105\">\n"
-   "    </a>\n"
-   "    <div class=\"follow-card-text\">\n"
-   "      <p class=\"follow-card-title\">关注站长公众号</p>\n"
-   "      <p>站长在微信公众号 <strong>TuringLambdaAI</strong> 发布原创内容，微信扫描二维码关注，或<a href=\"/wechat/\">了解更多</a>。</p>\n"
-   "    </div>\n"
-   "  </aside>\n"))
+;; ---- wechat page (公众号专页 /wechat/) ----
+
+;; The only conversion surfaces are this page and the footer link —
+;; reading experience comes first, no funnel elements inside posts.
+(define (wechat-page)
+  (define content
+    (string-append
+     "<article class=\"post\">\n"
+     "  <header class=\"post-header\">\n"
+     "    <h1>站长的微信公众号</h1>\n"
+     "    <div class=\"post-meta\">\n"
+     "      <span>TuringLambdaAI</span>\n"
+     "    </div>\n"
+     "  </header>\n"
+     "  <div class=\"post-content\">\n"
+     "    <p>站长是汽车嵌入式工程师，方向 AUTOSAR、CAN/UDS 与 gPTP 时间同步；业余用 Racket 写 macOS、Windows、Linux 上的原生桌面应用。</p>\n"
+     "    <p>微信公众号 <strong>TuringLambdaAI</strong> 发布他的中文原创内容：汽车电子与嵌入式开发、AI 工作流，以及独立开发中的工程实践。本站备份的王垠博客文章版权归原作者所有，公众号里的才是站长自己的写作。</p>\n"
+     "    <p>微信扫描下方二维码关注，或在微信中搜索「TuringLambdaAI」。</p>\n"
+     "    <p class=\"wechat-qr\">\n"
+     "      <img src=\"/wechat-qr.jpg\" alt=\"微信扫描二维码关注公众号 TuringLambdaAI\" width=\"320\" height=\"352\">\n"
+     "    </p>\n"
+     "  </div>\n"
+     "</article>"))
+  (base-page #:title "站长的微信公众号"
+             #:description "站长的微信公众号 TuringLambdaAI：中文的汽车电子、嵌入式与 AI 工作流原创内容，扫码或搜索关注"
+             #:compact-header #t
+             #:page-url "/wechat/"
+             content))
 
 ;; ---- post page (post.njk) ----
 
@@ -354,8 +370,6 @@ SCRIPT
      (dict-ref p 'html) "\n"
      "  </div>\n"
      "\n"
-     follow-card
-     "\n"
      post-nav
      "</article>"))
   (base-page #:title title
@@ -364,32 +378,6 @@ SCRIPT
              #:created created
              #:compact-header #t
              #:page-url url
-             content))
-
-;; ---- wechat page (公众号专页 /wechat/) ----
-
-(define (wechat-page)
-  (define content
-    (string-append
-     "<article class=\"post\">\n"
-     "  <header class=\"post-header\">\n"
-     "    <h1>站长的微信公众号</h1>\n"
-     "    <div class=\"post-meta\">\n"
-     "      <span>站长原创内容</span>\n"
-     "    </div>\n"
-     "  </header>\n"
-     "  <div class=\"post-content\">\n"
-     "    <p>站长在微信公众号 <strong>TuringLambdaAI</strong> 发布原创内容，欢迎关注。</p>\n"
-     "    <p>微信扫描下方二维码，或在微信中搜索「TuringLambdaAI」。</p>\n"
-     "    <p class=\"wechat-qr\">\n"
-     "      <img src=\"/wechat-qr.jpg\" alt=\"微信扫描二维码关注公众号 TuringLambdaAI\" width=\"320\" height=\"352\">\n"
-     "    </p>\n"
-     "  </div>\n"
-     "</article>"))
-  (base-page #:title "站长的微信公众号"
-             #:description "站长原创内容的微信公众号 TuringLambdaAI，扫码或搜索关注"
-             #:compact-header #t
-             #:page-url "/wechat/"
              content))
 
 ;; ---- home page with year sections + pagination (index.njk) ----

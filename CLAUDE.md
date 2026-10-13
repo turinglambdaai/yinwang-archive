@@ -93,4 +93,4 @@ source: https://www.yinwang.org/posts/mites
 
 ## 商业定调与界面取向
 
-**阅读体验优先**。文章页：紧凑单行头部、768px 阅读列（~42 字/行）。**广告全线撤掉（不挂广告）**：AdSense 脚本与 meta、桌面双浮坑、移动单坑、ads.txt 已全部移除。公众号转化是站长收益渠道，路径为：文章正文后关注卡（`follow-card`：二维码 96px + 文案）与页脚一行链接 → `/wechat/` 专页（官方二维码 `wechat-qr.jpg` + 微信号，`build.rkt` 写出、sitemap 收录）。页脚两行极简：版权声明 + RSS/公众号链接（访问统计、站长主页、GitHub 链接、删除请求入口已裁撤——需要下架的版权方直接邮件联系站长）。阅读细节：方向键 ←/→ 切换上/下一篇（`site.rkt` 内联 JS）、`::selection`/focus-visible 主题色、引用块降噪（无底色填充）、行内代码不与链接抢色、vendor highlight.js 附带 lisp/scheme/haskell 语言包（common bundle 不含这三门，语料里有）。
+**阅读体验优先**。文章页：紧凑单行头部、768px 阅读列（~42 字/行）；**广告全线撤掉（不挂广告）**：AdSense 脚本与 meta、桌面双浮坑、移动单坑、ads.txt 已全部移除。**文章页内不放任何转化元素**（文尾公众号卡片曾试加，用户否决：突兀、图太小、生硬）。公众号转化只走两处：页脚一行链接 + `/wechat/` 专页（站长介绍 + 官方二维码 `wechat-qr.jpg` + 微信号，`build.rkt` 写出、sitemap 收录）。页脚两行极简：版权声明 + RSS/公众号链接（访问统计、站长主页、GitHub 链接、删除请求入口已裁撤——需要下架的版权方直接邮件联系站长）。阅读细节：方向键 ←/→ 切换上/下一篇（`site.rkt` 内联 JS）、`::selection`/focus-visible 主题色、引用块降噪（无底色填充）、行内代码不与链接抢色、vendor highlight.js 附带 lisp/scheme/haskell 语言包（common bundle 不含这三门，语料里有）。
