@@ -14,18 +14,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Racket
+        uses: Bogdanp/setup-racket@v1.15
         with:
-          python-version: '3.12'
+          version: stable
+          distribution: full
 
-      - name: Install Python dependencies
-        run: pip install -r scripts/requirements.txt
+      - name: Install dependencies
+        run: raco pkg install --auto --no-docs markdown http-easy
+
+      - name: Install package
+        run: raco pkg install --auto --no-docs --link "$(pwd)"
 
       - name: Run crawler
-        run: python scripts/crawler.py
+        run: raco yinwangdl crawl
 
       - name: Lint posts
-        run: python scripts/lint_posts.py
+        run: raco yinwangdl lint
 
       - name: Notify new posts
         env:
@@ -33,7 +38,7 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
-        run: python scripts/notify_new_posts.py
+        run: raco yinwangdl notify
 
       - name: Check for changes
         id: check

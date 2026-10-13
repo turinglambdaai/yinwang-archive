@@ -4,12 +4,12 @@ on:
   push:
     paths:
       - 'posts/**'
-      - 'scripts/lint_posts.py'
+      - 'yinwangdl/**'
       - '.github/workflows/lint.yml'
   pull_request:
     paths:
       - 'posts/**'
-      - 'scripts/lint_posts.py'
+      - 'yinwangdl/**'
 
 jobs:
   lint:
@@ -17,9 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Racket
+        uses: Bogdanp/setup-racket@v1.15
         with:
-          python-version: '3.12'
+          version: stable
+          distribution: full
+
+      - name: Install dependencies
+        run: raco pkg install --auto --no-docs markdown http-easy
+
+      - name: Install package
+        run: raco pkg install --auto --no-docs --link "$(pwd)"
 
       - name: Lint posts
-        run: python scripts/lint_posts.py
+        run: raco yinwangdl lint

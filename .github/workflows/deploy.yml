@@ -22,17 +22,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Racket
+        uses: Bogdanp/setup-racket@v1.15
         with:
-          node-version: '22'
-          cache: 'npm'
+          version: stable
+          distribution: full
 
       - name: Install dependencies
-        run: npm ci
+        run: raco pkg install --auto --no-docs markdown http-easy
+
+      - name: Install package
+        run: raco pkg install --auto --no-docs --link "$(pwd)"
 
       - name: Build
-        run: npm run build
+        run: raco yinwangdl build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

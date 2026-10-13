@@ -2,34 +2,34 @@
 
 Auto-crawled archive of [yinwang.org](https://www.yinwang.org) blog posts by Wang Yin. The crawler runs weekly via GitHub Actions, saving every post as Markdown with images. Deleted articles are preserved through Git history.
 
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Racket](https://img.shields.io/badge/Racket-9E3E97?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 **English** · [中文](README.zh-CN.md)
 
 ## Features
 
+- **Racket full-stack** — crawler, linter and static site generator are one Racket package (`raco yinwangdl …`)
 - **Automated weekly crawl** via GitHub Actions (every Monday at 03:00 UTC)
 - **Incremental updates** — only downloads new or modified posts
 - **Full content archival** — posts saved as Markdown, images downloaded locally
 - **Self-contained Markdown** — file name = URL slug, Chinese title in frontmatter, body starts with an H1 heading
 - **Deduplication** — prevents duplicate files by tracking source URLs
-- **Static site generation** — builds a searchable website with Eleventy and deploys to Vercel/GitHub Pages
+- **Static site generation** — builds a searchable website (Racket, no Node) and deploys to GitHub Pages
 
 ## Project Structure
 
 ```
 yinwangdl/
-├── posts/           # Markdown articles (file name = Chinese title)
+├── posts/           # Markdown articles (file name = URL slug)
 ├── images/          # Post images (organized by URL slug)
-├── scripts/         # Crawler and utility scripts
-├── src/site/        # Eleventy static site source
+├── yinwangdl/       # Racket package: crawler, formatter, linter, site builder
+├── src/site/        # Static assets (styles, favicon, vendored highlight.js)
 └── index.json       # Post metadata index
 ```
 
 ## Requirements
 
-- Python 3.12+
-- [requests](https://pypi.org/project/requests/) (`pip install requests`)
+- [Racket](https://racket-lang.org) (stable; any 8.x+)
 
 ## Quick Start
 
@@ -40,35 +40,48 @@ git clone https://github.com/turinglambdaai/yinwangdl.git
 cd yinwangdl
 ```
 
-### 2. Run the crawler manually
+### 2. Install the package
 
 ```bash
-# Install dependencies
-pip install -r scripts/requirements.txt
+raco pkg install --auto --no-docs --link "$(pwd)"
+```
 
+### 3. Run the pipeline
+
+```bash
 # Incremental crawl (only new/updated posts)
-python scripts/crawler.py
+raco yinwangdl crawl
 
 # Force re-download all posts
-python scripts/crawler.py --force
+raco yinwangdl crawl --force
+
+# Validate all posts (CI gate)
+raco yinwangdl lint
+
+# Build the static site (output: dist/)
+raco yinwangdl build
 ```
 
-### 3. Build the static site
+### Repair tools
 
 ```bash
-npm install
-npm run build    # Output goes to dist/
-npm run dev      # Local dev server with live reload
+raco yinwangdl fix-bold-spacing [--check|--dry-run]  # heal `** text **` emphasis
+raco yinwangdl normalize-code [--check]              # indented code -> fences
+raco yinwangdl notify                                # email new posts (dry-run default)
 ```
+
+All commands accept `--root DIR` to operate on a checkout elsewhere than
+the current directory.
 
 ## How It Works
 
-1. **Fetch post list** — The crawler calls `https://www.yinwang.org/api/v1/posts` with pagination (`skip`/`limit`) to get all post slugs.
-2. **Deduplicate** — It builds an index of existing posts by `source` URL to avoid duplicates.
-3. **Download each post** — For each slug, it fetches the full post content from `https://www.yinwang.org/api/v1/posts/{slug}`.
-4. **Download images** — All images referenced in the post are downloaded to `images/{slug}/`.
-5. **Format and save** — The content is reformatted (CJK spacing, heading normalization, code block language hints) and saved as a Markdown file with YAML frontmatter.
-6. **Update index** — `index.json` is updated with metadata for each processed post.
+1. **Fetch post list** — the crawler calls `https://www.yinwang.org/api/v1/posts` with pagination (`skip`/`limit`) to get all post slugs.
+2. **Deduplicate** — it builds an index of existing posts by `source` URL to avoid duplicates.
+3. **Download each post** — for each slug, it fetches the full post content from `https://www.yinwang.org/api/v1/posts/{slug}`.
+4. **Download images** — all images referenced in the post are downloaded to `images/{slug}/`.
+5. **Format and save** — the content is reformatted (CJK spacing, heading normalization, code fence conversion) and saved as a Markdown file with YAML frontmatter.
+6. **Update index** — `index.json` is updated with metadata for each processed post (byte-compatible with the historical Python serializer, so no-op crawls stay diff-free).
+7. **Build** — the site generator renders Markdown → HTML (heading anchors, fenced code with client-side highlight.js, Atom feed, search index, sitemap, llms.txt) into `dist/`.
 
 ### Post format
 
@@ -106,7 +119,8 @@ secrets (Settings → Secrets and variables → Actions):
 | `SMTP_PASS` | SMTP authorization code (not login password) |
 | `NOTIFY_TO` | recipient, usually the same address          |
 
-Without the secrets the step is a harmless dry run.
+Without the secrets the step is a harmless dry run. Delivery goes
+through `curl`'s SMTP client (STARTTLS), which must be on `PATH`.
 
 ## RSS
 
@@ -116,8 +130,8 @@ the content belongs to its author.
 
 ## License
 
-The code (scripts & workflows) is licensed under the MIT License; the
-archived posts remain copyrighted by their author — see [LICENSE](LICENSE).
+The code (Racket package & workflows) is licensed under the MIT License;
+the archived posts remain copyrighted by their author — see [LICENSE](LICENSE).
 
 ## Copyright & Takedown
 
