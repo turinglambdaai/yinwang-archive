@@ -11,6 +11,7 @@
   --shadow: 0 1px 3px rgba(28, 25, 23, 0.06), 0 1px 2px rgba(28, 25, 23, 0.04);
   --shadow-md: 0 4px 6px -1px rgba(28, 25, 23, 0.07), 0 2px 4px -2px rgba(28, 25, 23, 0.05);
   --radius: 12px;
+  --selection: #F3DCBE;
   /* Content column breathes with the viewport: 780px at 1300px viewport,
      880px at 1920px+, capped to keep CJK line length readable (~50 chars) */
   --max-w: clamp(780px, calc(16.1vw + 571px), 880px);
@@ -30,7 +31,19 @@
     --border: #3D3835;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --selection: #56401F;
   }
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -112,6 +125,46 @@ a:hover { color: var(--accent-hover); }
 .site-desc a:hover {
   color: var(--accent);
   border-color: var(--accent);
+}
+
+/* Post pages use a slim one-line header so reading starts higher */
+.site-header--compact {
+  padding: 22px 0 4px;
+}
+
+.site-header--compact .container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo--compact {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.site-logo--compact svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.site-title-link {
+  color: inherit;
+}
+
+.site-header--compact .site-title {
+  font-size: 1.02em;
+  font-weight: 600;
+}
+
+.site-header--compact .site-title-link:hover .site-title {
+  color: var(--accent);
 }
 
 /* ---- Homepage ---- */
@@ -202,25 +255,14 @@ a:hover { color: var(--accent-hover); }
 /* ---- Post Page ---- */
 
 .post {
-  padding-top: 16px;
-  padding-bottom: 60px;
-}
-
-.post-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.85em;
-  color: var(--text-3);
-  margin-bottom: 32px;
-  transition: color 0.15s;
-}
-.post-back:hover {
-  color: var(--accent);
+  max-width: 768px;   /* 720px of text = ~42 CJK chars at 17px */
+  margin: 0 auto;
+  padding-top: 28px;
+  padding-bottom: 56px;
 }
 
 .post-header {
-  margin-bottom: 36px;
+  margin-bottom: 40px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--border);
 }
@@ -255,7 +297,9 @@ a:hover { color: var(--accent-hover); }
 .post-content {
   font-size: 17px;
   line-height: 1.9;
+  letter-spacing: 0.01em;
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 /* CJK body text justifies cleanly (standard for Chinese reading apps);
@@ -300,11 +344,14 @@ a:hover { color: var(--accent-hover); }
 
 .post-content blockquote {
   border-left: 3px solid var(--accent);
-  background: var(--accent-bg);
-  padding: 0.6em 1em;
-  margin: 1.2em 0;
-  border-radius: 0 8px 8px 0;
+  padding: 0.15em 0 0.15em 1.1em;
+  margin: 1.3em 0;
   color: var(--text-2);
+}
+
+.post-content pre,
+.post-content code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Cascadia Mono", monospace;
 }
 
 .post-content pre {
@@ -320,7 +367,7 @@ a:hover { color: var(--accent-hover); }
 
 .post-content code {
   background: var(--accent-bg);
-  color: var(--accent);
+  color: var(--text);
   padding: 2px 6px;
   border-radius: 5px;
   font-size: 0.88em;
@@ -419,15 +466,14 @@ a:hover { color: var(--accent-hover); }
 /* ---- Footer ---- */
 
 .site-footer {
-  padding: 24px 0;
+  padding: 28px 0 36px;
   text-align: center;
   font-size: 0.82em;
   color: var(--text-3);
-  border-top: 1px solid var(--border);
 }
 
 .footer-links {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .footer-links a {
@@ -444,6 +490,11 @@ a:hover { color: var(--accent-hover); }
 .footer-links .sep {
   margin: 0 8px;
   color: var(--border);
+}
+
+.footer-links strong {
+  color: var(--text-2);
+  font-weight: 600;
 }
 
 /* ---- Responsive ---- */
@@ -469,16 +520,10 @@ a:hover { color: var(--accent-hover); }
   overflow: hidden;
 }
 
-.ad-mobile--inpost {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--border);
-}
-
 @media (max-width: 1299px) {
   .ad-mobile {
     display: block;
-    margin: 24px auto;
+    margin: 16px auto 24px;
     min-height: 90px;
   }
 }
@@ -820,99 +865,44 @@ html { scroll-behavior: smooth; }
 
 .post-toc-list a.post-toc-h3 { padding-left: 1.6em; }
 
-/* ---- WeChat CTA card ---- */
-
-.wechat-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-top: 40px;
-  padding: 20px 24px;
-  background: var(--accent-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-.wechat-cta-title {
-  font-weight: 700;
-  font-size: 1.02em;
-  color: var(--text);
-}
-
-.wechat-cta-desc {
-  margin: 6px 0 0;
-  font-size: 0.88em;
-  line-height: 1.65;
-  color: var(--text-2);
-}
-
-.wechat-cta-desc strong {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.wechat-cta-hint {
-  display: none;
-  margin: 8px 0 0;
-  font-size: 0.8em;
-  color: var(--text-3);
-}
-
-.wechat-cta-qr {
-  width: 104px;
-  height: 104px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #FFFFFF;
-  flex-shrink: 0;
-  display: block;
-  margin: 0;
-}
-
-@media (max-width: 640px) {
-  .wechat-cta { padding: 16px; gap: 16px; }
-  .wechat-cta-hint { display: block; }
-  .wechat-cta-qr { width: 88px; height: 88px; }
-}
-
-/* ---- Prev / Next post nav ---- */
+/* ---- Prev / Next post nav (the reading hand-off) ---- */
 
 .post-nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 24px;
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
 }
 
 .post-nav-item {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 14px 18px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  transition: border-color 0.15s, box-shadow 0.2s;
 }
 
 .post-nav-item:hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow-md);
+  opacity: 0.82;
 }
 
 .post-nav-newer { text-align: right; }
 
 .post-nav-label {
   font-size: 0.78em;
+  letter-spacing: 0.04em;
   color: var(--text-3);
 }
 
 .post-nav-title {
-  font-size: 0.92em;
+  font-size: 0.94em;
   font-weight: 500;
   color: var(--text);
-  line-height: 1.45;
+  line-height: 1.5;
+}
+
+.post-nav-item:hover .post-nav-title {
+  color: var(--accent);
 }
 
 @media (max-width: 640px) {

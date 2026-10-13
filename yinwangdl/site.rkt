@@ -20,7 +20,6 @@
 (define adsense-client "ca-pub-3215512126020129")
 (define adsense-slot "7014497615")
 (define umami-id "38c4a1f4-0780-448e-a6f3-2e614c245585")
-(define umami-share "https://cloud.umami.is/share/XoOzcFrnLbRY6EQH")
 
 (define default-description
   "王垠博客文章备份与检索，自动同步 yinwang.org，版权归原作者所有")
@@ -42,12 +41,6 @@
    "      <div class=\"ad-mobile\">\n"
    (ad-ins) "\n"
    "      </div>\n"))
-
-(define ad-inpost-template
-  (string-append
-   "  <div class=\"ad-mobile ad-mobile--inpost\">\n"
-   (ad-ins) "\n"
-   "  </div>\n"))
 
 ;; ---- the two inline script blocks (verbatim from base.njk) ----
 
@@ -115,6 +108,17 @@
   /* ---- client-side syntax highlighting (vendored highlight.js) ---- */
   window.addEventListener('DOMContentLoaded',function(){
     if(window.hljs){window.hljs.highlightAll();}
+  });
+
+  /* ---- arrow keys walk to the previous / next post ---- */
+  document.addEventListener('keydown',function(e){
+    if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey)return;
+    var t=e.target;
+    if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
+    var older=document.querySelector('.post-nav-older');
+    var newer=document.querySelector('.post-nav-newer');
+    if(e.key==='ArrowLeft'&&older)location.href=older.href;
+    if(e.key==='ArrowRight'&&newer)location.href=newer.href;
   });
 })();
 </script>
@@ -184,6 +188,7 @@ SCRIPT
                    #:description [description #f]
                    #:og-type [og-type #f]
                    #:created [created #f]
+                   #:compact-header [compact-header #f]
                    #:page-url page-url
                    content)
   (define full-title
@@ -223,6 +228,9 @@ SCRIPT
    (format "  <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=~a\"\n    crossorigin=\"anonymous\"></script>\n" adsense-client)
    (format "  <script defer src=\"https://cloud.umami.is/script.js\" data-website-id=\"~a\"></script>\n" umami-id)
    "  <script defer src=\"/vendor/highlight.min.js\"></script>\n"
+   "  <script defer src=\"/vendor/lisp.min.js\"></script>\n"
+   "  <script defer src=\"/vendor/scheme.min.js\"></script>\n"
+   "  <script defer src=\"/vendor/haskell.min.js\"></script>\n"
    "  <link rel=\"stylesheet\" href=\"/styles/main.css\">\n"
    "</head>\n"
    "<body>\n"
@@ -230,32 +238,37 @@ SCRIPT
    "  <div class=\"page-layout\">\n"
    ad-aside-template
    "    <div class=\"page-body\">\n"
-   "      <header class=\"site-header\">\n"
-   "        <div class=\"container\">\n"
-   "          <div class=\"site-logo\" aria-hidden=\"true\">\n"
-   "            " site-logo-svg "\n"
-   "          </div>\n"
-   (format "          <h1 class=\"site-title\">~a</h1>\n" (html-escape site-name))
-   "          <p class=\"site-desc\">自动备份 <a href=\"https://www.yinwang.org\">yinwang.org</a> 博客文章 | <a href=\"https://github.com/turinglambdaai/yinwangdl\">GitHub</a></p>\n"
-   "        </div>\n"
-   "      </header>\n"
+   (if compact-header
+       (string-append
+        "      <header class=\"site-header site-header--compact\">\n"
+        "        <div class=\"container\">\n"
+        "          <a class=\"site-logo site-logo--compact\" href=\"/\" aria-label=\"返回首页\">" site-logo-svg "</a>\n"
+        "          <a class=\"site-title-link\" href=\"/\"><span class=\"site-title\">" (html-escape site-name) "</span></a>\n"
+        "        </div>\n"
+        "      </header>\n")
+       (string-append
+        "      <header class=\"site-header\">\n"
+        "        <div class=\"container\">\n"
+        "          <div class=\"site-logo\" aria-hidden=\"true\">\n"
+        "            " site-logo-svg "\n"
+        "          </div>\n"
+        (format "          <h1 class=\"site-title\">~a</h1>\n" (html-escape site-name))
+        "          <p class=\"site-desc\">自动备份 <a href=\"https://www.yinwang.org\">yinwang.org</a> 博客文章</p>\n"
+        "        </div>\n"
+        "      </header>\n"))
    "      <main class=\"container\">\n"
    content "\n"
    "      </main>\n"
    ad-mobile-template
    "      <footer class=\"site-footer\">\n"
    "        <div class=\"container\">\n"
-   "          <p>内容版权归原作者所有 | 本站仅作备份存档，不销售任何内容</p>\n"
+   "          <p>内容版权归原作者所有 · 本站仅作备份存档</p>\n"
    "          <p class=\"footer-links\">\n"
    "            <a href=\"https://github.com/turinglambdaai/yinwangdl/issues\" target=\"_blank\" rel=\"noopener\">删除请求</a>\n"
    "            <span class=\"sep\">&middot;</span>\n"
-   (format "            <a href=\"~a\" target=\"_blank\" rel=\"noopener\">访问统计</a>\n" umami-share)
-   "            <span class=\"sep\">&middot;</span>\n"
-   "            <a href=\"https://jrtx.site\" target=\"_blank\" rel=\"noopener\">站长主页</a>\n"
-   "            <span class=\"sep\">&middot;</span>\n"
    "            <a href=\"/feed.xml\">RSS</a>\n"
    "            <span class=\"sep\">&middot;</span>\n"
-   "            <a href=\"https://github.com/turinglambdaai\" target=\"_blank\" rel=\"noopener\">GitHub</a>\n"
+   "            <span>站长原创：公众号 <strong>TuringLambdaAI</strong></span>\n"
    "          </p>\n"
    "        </div>\n"
    "      </footer>\n"
@@ -341,7 +354,6 @@ SCRIPT
     (string-append
      jsonld
      "<article class=\"post\">\n"
-     "  <a href=\"/\" class=\"post-back\">&larr; 返回列表</a>\n"
      "  <header class=\"post-header\">\n"
      (format "    <h1>~a</h1>\n" (html-escape title))
      "    <div class=\"post-meta\">\n"
@@ -352,22 +364,13 @@ SCRIPT
      (dict-ref p 'html) "\n"
      "  </div>\n"
      "\n"
-     "  <aside class=\"wechat-cta\">\n"
-     "    <div class=\"wechat-cta-body\">\n"
-     "      <div class=\"wechat-cta-title\">想读更多？关注站长公众号</div>\n"
-     "      <p class=\"wechat-cta-desc\">公众号里是站长自己的原创技术文章——编程语言、嵌入式、汽车电子。微信搜索 <strong>TuringLambdaAI</strong>，或扫右侧二维码关注。</p>\n"
-     "      <p class=\"wechat-cta-hint\">长按识别二维码关注</p>\n"
-     "    </div>\n"
-     "    <img class=\"wechat-cta-qr\" src=\"/wechat-qr.jpg\" alt=\"公众号 TuringLambdaAI 二维码\" width=\"112\" height=\"112\" loading=\"lazy\">\n"
-     "  </aside>\n"
-     "\n"
      post-nav
-     ad-inpost-template
      "</article>"))
   (base-page #:title title
              #:description #f
              #:og-type "article"
              #:created created
+             #:compact-header #t
              #:page-url url
              content))
 

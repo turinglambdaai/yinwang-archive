@@ -91,6 +91,6 @@ source: https://www.yinwang.org/posts/mites
 - `deploy.yml`：push 到 main/master 构建 dist 部署 GH Pages
 - 配方：`Bogdanp/setup-racket` → `raco pkg install --auto --no-docs markdown http-easy-lib` → `raco pkg install --auto --no-docs --link "$(pwd)"`
 
-## 商业定调
+## 商业定调与界面取向
 
-内容归王垠，公众号卡片只做「站长原创」引流定位；页脚有删除请求通道；措辞避免「非商业」声明（与广告冲突）。
+**阅读体验优先**。文章页：紧凑单行头部、768px 阅读列（~42 字/行）、正文后只有上/下一篇动线；无二维码卡片、无文章内广告位。公众号引流降级为页脚一行纯文字（`站长原创：公众号 TuringLambdaAI`）；广告位收敛为桌面双浮坑（视口边缘，≥1300px）+ 移动单坑（main 之后），互不叠加。页脚两行极简：版权声明 + 删除请求/RSS/公众号文字（访问统计、站长主页、GitHub 链接已裁撤）。阅读细节：方向键 ←/→ 切换上/下一篇（`site.rkt` 内联 JS）、`::selection`/focus-visible 主题色、引用块降噪（无底色填充）、行内代码不与链接抢色、vendor highlight.js 附带 lisp/scheme/haskell 语言包（common bundle 不含这三门，语料里有）。措辞避免「非商业」声明（与广告冲突）。
