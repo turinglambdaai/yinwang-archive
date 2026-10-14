@@ -80,6 +80,8 @@ source: https://www.yinwang.org/posts/mites
 
 ## 站点渲染对齐
 
+- 样式表引用按**内容哈希**缓存指纹（`main.css?v=<sha1 前 10 位>`，`build.rkt` 算好经 `css-version` parameter 注入）——线上过 Cloudflare，改样式不改 URL 会拿到旧缓存（compact 头部对齐修复时踩过）
+
 - 代码高亮：构建期只输出 `<pre><code class="language-x">`，高亮由 vendor 的 highlight.js 在浏览器端执行（`src/site/vendor/highlight.min.js`，common bundle）——浏览器驻留 UI 薄壳层
 - 线上站（yinwang.jrtx.site）部署滞后于仓库时，正文对比会出现假差异；以 `posts/` 为准
 - 喂给 feed 的 `<updated>` 用最新 `created`（历史 Eleventy 用文件时间戳，在 CI 上每次构建都变，改为确定性值）

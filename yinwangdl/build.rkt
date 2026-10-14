@@ -12,6 +12,7 @@
          racket/format
          racket/match
          racket/dict
+         file/sha1
          "util.rkt"
          "frontmatter.rkt"
          "render.rkt"
@@ -82,30 +83,39 @@
   (make-directory* out)
   (define posts (load-posts root))
 
-  ;; paginated home
-  (define total-pages (max 1 (ceiling (/ (length posts) page-size))))
-  (for ([page (in-range total-pages)])
-    (define slice
-      (list-tail posts
-                 (min (* page page-size) (length posts))))
-    (define slice-50 (take slice (min page-size (length slice))))
-    (write-page! out (page-url page)
-                 (index-page slice-50 page total-pages)))
+  ;; cache-bust the stylesheet URL by its content hash
+  (define css-file (build-path (site-src-dir root) "styles" "main.css"))
+  (define css-hash
+    (substring (sha1 (open-input-bytes (file->bytes css-file))) 0 10))
 
-  ;; post pages with older/newer neighbours
-  (for ([i (in-naturals)] [p (in-list posts)])
-    (define older (if (< (+ i 1) (length posts)) (list-ref posts (+ i 1)) #f))
-    (define newer (if (> i 0) (list-ref posts (- i 1)) #f))
-    (write-page! out (dict-ref p 'url) (post-page p older newer)))
+  (parameterize ([css-version css-hash])
+    ;; paginated home
+    (define total-pages (max 1 (ceiling (/ (length posts) page-size))))
+    (for ([page (in-range total-pages)])
+      (define slice
+        (list-tail posts
+                   (min (* page page-size) (length posts))))
+      (define slice-50 (take slice (min page-size (length slice))))
+      (write-page! out (page-url page)
+                   (index-page slice-50 page total-pages)))
 
-  ;; wechat page (公众号专页)
-  (write-page! out "/wechat/" (wechat-page))
+    ;; post pages with older/newer neighbours
+    (for ([i (in-naturals)] [p (in-list posts)])
+      (define older (if (< (+ i 1) (length posts)) (list-ref posts (+ i 1)) #f))
+      (define newer (if (> i 0) (list-ref posts (- i 1)) #f))
+      (write-page! out (dict-ref p 'url) (post-page p older newer)))
 
-  ;; metadata outputs
-  (write-utf8! (build-path out "feed.xml") (feed-xml posts))
-  (write-utf8! (build-path out "search.json") (search-json posts))
-  (write-utf8! (build-path out "sitemap.xml") (sitemap-xml posts total-pages))
-  (write-utf8! (build-path out "llms.txt") (llms-txt posts))
+    ;; wechat page (公众号专页)
+    (write-page! out "/wechat/" (wechat-page))
+
+    ;; metadata outputs
+    (write-utf8! (build-path out "feed.xml") (feed-xml posts))
+    (write-utf8! (build-path out "search.json") (search-json posts))
+    (write-utf8! (build-path out "sitemap.xml") (sitemap-xml posts total-pages))
+    (write-utf8! (build-path out "llms.txt") (llms-txt posts))
+
+    (printf "Wrote ~a posts (~a pages) to ~a\n"
+            (length posts) total-pages out))
 
   ;; assets
   (define src (site-src-dir root))
@@ -120,7 +130,4 @@
   (define images (images-dir root))
   (when (directory-exists? images)
     (copy-directory/files images (build-path out "images")))
-
-  (printf "Wrote ~a posts (~a pages) to ~a\n"
-          (length posts) total-pages out)
   0)

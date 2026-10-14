@@ -29,6 +29,9 @@
   (check-false (string-contains? html "follow-card"))
   (check-false (string-contains? html "wechat-qr.jpg")))
 
+(test-case "stylesheet link is content-hash cache-busted"
+  (check-true (regexp-match? #px"main.css\\?v=[0-9a-f]+" (post-page post #f #f))))
+
 (test-case "ads are fully removed from every page"
   (for ([html (in-list (list (post-page post #f #f) (wechat-page)))])
     (check-false (string-contains? html "adsbygoogle"))

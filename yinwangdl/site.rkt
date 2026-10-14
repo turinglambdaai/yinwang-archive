@@ -22,6 +22,11 @@
 (define default-description
   "王垠博客文章备份与检索，自动同步 yinwang.org，版权归原作者所有")
 
+;; Content hash of main.css, set by build.rkt so every deploy gets a
+;; fresh stylesheet URL (Cloudflare/GH Pages would otherwise serve a
+;; stale cached copy after style changes).
+(define css-version (make-parameter "0"))
+
 ;; ---- shared snippets ----
 
 ;; The site no longer runs ads: AdSense script, meta tag, floating
@@ -215,7 +220,7 @@ SCRIPT
    "  <script defer src=\"/vendor/lisp.min.js\"></script>\n"
    "  <script defer src=\"/vendor/scheme.min.js\"></script>\n"
    "  <script defer src=\"/vendor/haskell.min.js\"></script>\n"
-   "  <link rel=\"stylesheet\" href=\"/styles/main.css\">\n"
+   (format "  <link rel=\"stylesheet\" href=\"/styles/main.css?v=~a\">\n" (css-version))
    "</head>\n"
    "<body>\n"
    "  <div class=\"reading-progress\" id=\"reading-progress\" aria-hidden=\"true\"></div>\n"
