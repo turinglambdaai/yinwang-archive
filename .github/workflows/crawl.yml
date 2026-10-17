@@ -27,10 +27,10 @@ jobs:
         run: raco pkg install --auto --no-docs --link "$(pwd)"
 
       - name: Run crawler
-        run: raco yinwangdl crawl
+        run: raco yinwang-archive crawl
 
       - name: Lint posts
-        run: raco yinwangdl lint
+        run: raco yinwang-archive lint
 
       - name: Notify new posts
         env:
@@ -38,7 +38,7 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           NOTIFY_TO: ${{ secrets.NOTIFY_TO }}
-        run: raco yinwangdl notify
+        run: raco yinwang-archive notify
 
       - name: Check for changes
         id: check

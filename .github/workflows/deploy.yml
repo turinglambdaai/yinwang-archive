@@ -35,7 +35,7 @@ jobs:
         run: raco pkg install --auto --no-docs --link "$(pwd)"
 
       - name: Build
-        run: raco yinwangdl build
+        run: raco yinwang-archive build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

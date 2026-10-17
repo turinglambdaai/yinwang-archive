@@ -60,7 +60,7 @@
   ;; MIMEText(body, "plain", "utf-8") parity: base64-encoded body,
   ;; wrapped at 76 columns (base64-encode does this)
   (string-append
-   "From: yinwangdl <" from ">\r\n"
+   "From: yinwang-archive <" from ">\r\n"
    "To: " to "\r\n"
    "Subject: " (rfc2047-subject subject) "\r\n"
    "MIME-Version: 1.0\r\n"
@@ -70,7 +70,7 @@
    (bytes->string/latin-1 (base64-encode (string->bytes/utf-8 body) "\r\n"))))
 
 (define (send-via-curl host user password to message)
-  (define tmp (make-temporary-file "yinwangdl-notify~a"))
+  (define tmp (make-temporary-file "yinwang-archive-notify~a"))
   (write-utf8! tmp message)
   (dynamic-wind
     (λ () (void))

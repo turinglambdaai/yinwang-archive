@@ -21,7 +21,7 @@
 
 (provide crawl crawl-command)
 
-(define user-agent "Mozilla/5.0 (compatible; yinwangdl-crawler/2.0)")
+(define user-agent "Mozilla/5.0 (compatible; yinwang-archive-crawler/2.0)")
 (define crawl-delay 1.0)             ; seconds between requests
 (define image-delay 0.5)
 

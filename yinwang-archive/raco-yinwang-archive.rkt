@@ -1,6 +1,6 @@
 #lang racket/base
 
-;; raco yinwangdl — command dispatch for the archive pipeline.
+;; raco yinwang-archive — command dispatch for the archive pipeline.
 ;;   crawl [--force] [--root DIR]          fetch new/updated posts
 ;;   lint [--root DIR]                     validate all posts (CI gate)
 ;;   fix-bold-spacing [--check|--dry-run]  heal `** text **` emphasis
@@ -56,7 +56,7 @@
     [(list-rest "notify" _)
      (notify-command root-path)]
     [_
-     (displayln "usage: raco yinwangdl <command> [flags]")
+     (displayln "usage: raco yinwang-archive <command> [flags]")
      (displayln "  crawl [--force] [--root DIR]        fetch new/updated posts from yinwang.org")
      (displayln "  lint [--root DIR]                   validate all posts")
      (displayln "  fix-bold-spacing [--check|--dry-run]  heal broken emphasis")

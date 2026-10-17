@@ -32,10 +32,10 @@ jobs:
         run: raco pkg install --auto --no-docs --link "$(pwd)"
 
       - name: Run tests
-        run: raco test -p yinwangdl
+        run: raco test -p yinwang-archive
 
       - name: Lint posts
-        run: raco yinwangdl lint
+        run: raco yinwang-archive lint
 
       - name: Build the site
-        run: raco yinwangdl build
+        run: raco yinwang-archive build

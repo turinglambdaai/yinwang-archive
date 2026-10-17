@@ -22,7 +22,7 @@
   (check-true (string-contains? html "<a href=\"/wechat/\">"))
   (check-true (string-contains? html "公众号 TuringLambdaAI</a>"))
   (check-false (string-contains? html "删除请求"))
-  (check-false (string-contains? html "yinwangdl/issues")))
+  (check-false (string-contains? html "yinwang-archive/issues")))
 
 (test-case "posts stay clean: no funnel elements inside the article"
   (define html (post-page post #f #f))

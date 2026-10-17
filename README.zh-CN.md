@@ -8,7 +8,7 @@
 
 ## 功能特性
 
-- **Racket 全栈** — 爬虫、校验器、静态站生成器同属一个 Racket 包（`raco yinwangdl …`）
+- **Racket 全栈** — 爬虫、校验器、静态站生成器同属一个 Racket 包（`raco yinwang-archive …`）
 - **每周自动爬取** — 通过 GitHub Actions 执行（每周一 UTC 03:00）
 - **增量更新** — 仅下载新增或修改的文章
 - **完整内容归档** — 文章保存为 Markdown，图片下载到本地
@@ -19,10 +19,10 @@
 ## 项目结构
 
 ```
-yinwangdl/
+yinwang-archive/
 ├── posts/           # Markdown 文章（文件名 = slug）
 ├── images/          # 文章图片（按 URL slug 分目录）
-├── yinwangdl/       # Racket 包：爬虫、格式化、校验、建站
+├── yinwang-archive/       # Racket 包：爬虫、格式化、校验、建站
 ├── src/site/        # 静态资产（样式、favicon、自托管 highlight.js）
 └── index.json       # 文章元数据索引
 ```
@@ -36,8 +36,8 @@ yinwangdl/
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/turinglambdaai/yinwangdl.git
-cd yinwangdl
+git clone https://github.com/turinglambdaai/yinwang-archive.git
+cd yinwang-archive
 ```
 
 ### 2. 安装包
@@ -50,24 +50,24 @@ raco pkg install --auto --no-docs --link "$(pwd)"
 
 ```bash
 # 增量爬取（仅新增/更新的文章）
-raco yinwangdl crawl
+raco yinwang-archive crawl
 
 # 强制重新下载所有文章
-raco yinwangdl crawl --force
+raco yinwang-archive crawl --force
 
 # 全量校验（CI 门禁）
-raco yinwangdl lint
+raco yinwang-archive lint
 
 # 构建静态站点（输出到 dist/）
-raco yinwangdl build
+raco yinwang-archive build
 ```
 
 ### 修复工具
 
 ```bash
-raco yinwangdl fix-bold-spacing [--check|--dry-run]  # 修复 `** 文字 **` 坏强调
-raco yinwangdl normalize-code [--check]              # 顶层缩进代码转围栏
-raco yinwangdl notify                                # 新文章邮件提醒（缺省 dry-run）
+raco yinwang-archive fix-bold-spacing [--check|--dry-run]  # 修复 `** 文字 **` 坏强调
+raco yinwang-archive normalize-code [--check]              # 顶层缩进代码转围栏
+raco yinwang-archive notify                                # 新文章邮件提醒（缺省 dry-run）
 ```
 
 所有命令支持 `--root DIR`，可在任意目录对指定检出操作。

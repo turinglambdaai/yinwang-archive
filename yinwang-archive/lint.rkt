@@ -45,10 +45,10 @@
             (list (format "~a: body must start with an H1 heading" name))))
       (if (equal? (fix-emphasis-spacing text) text)
           '()
-          (list (format "~a: broken emphasis (run raco yinwangdl fix-bold-spacing)" name)))
+          (list (format "~a: broken emphasis (run raco yinwang-archive fix-bold-spacing)" name)))
       (if (equal? (indented-code-to-fences text) text)
           '()
-          (list (format "~a: top-level indented code (run raco yinwangdl normalize-code)" name)))
+          (list (format "~a: top-level indented code (run raco yinwang-archive normalize-code)" name)))
       (let ([fence-count
              (count fence-line? (string-split body "\n" #:trim? #f))])
         (if (even? fence-count)

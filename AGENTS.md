@@ -1,21 +1,21 @@
 # 项目概述
 
-王垠博客（yinwang.org）文章备份站，**Racket 全栈**：爬虫、校验、静态站生成同属一个 Racket 包，`raco yinwangdl <命令>` 驱动。通过 API 爬取博文保存为 Markdown，生成静态站部署 GitHub Pages（GitHub Actions 每周一爬取）。posts 目录为**站点源文件**（不再考虑导回 Obsidian）。
+王垠博客（yinwang.org）文章备份站，**Racket 全栈**：爬虫、校验、静态站生成同属一个 Racket 包，`raco yinwang-archive <命令>` 驱动。通过 API 爬取博文保存为 Markdown，生成静态站部署 GitHub Pages（GitHub Actions 每周一爬取）。posts 目录为**站点源文件**（不再考虑导回 Obsidian）。
 
 ## 命令（最重要）
 
 ```
-raco yinwangdl crawl [--force] [--root DIR]   # 爬取（增量；--force 全量）
-raco yinwangdl lint [--root DIR]              # 全量校验，CI 门禁，应恒 0 错误
-raco yinwangdl build [--out DIR] [--root DIR] # 生成静态站到 dist/
-raco yinwangdl fix-bold-spacing [--check|--dry-run]  # 修复坏强调
-raco yinwangdl normalize-code [--check]       # 顶层缩进代码转围栏
-raco yinwangdl notify [--root DIR]            # 新文章邮件（缺省 dry-run）
+raco yinwang-archive crawl [--force] [--root DIR]   # 爬取（增量；--force 全量）
+raco yinwang-archive lint [--root DIR]              # 全量校验，CI 门禁，应恒 0 错误
+raco yinwang-archive build [--out DIR] [--root DIR] # 生成静态站到 dist/
+raco yinwang-archive fix-bold-spacing [--check|--dry-run]  # 修复坏强调
+raco yinwang-archive normalize-code [--check]       # 顶层缩进代码转围栏
+raco yinwang-archive notify [--root DIR]            # 新文章邮件（缺省 dry-run）
 ```
 
-改完代码跑 `raco test -p yinwangdl`（测试在 `yinwangdl/tests/`）。
+改完代码跑 `raco test -p yinwang-archive`（测试在 `yinwang-archive/tests/`）。
 
-## 包结构（yinwangdl/）
+## 包结构（yinwang-archive/）
 
 - `crawler.rkt`：主爬虫。增量逻辑 = source URL 去重 + `updated_at` 未变跳过；`format-content` 含自愈链（坏强调修复、顶层缩进代码转围栏、层级规范化、盘古空格），新爬内容自动规范化
 - `format.rkt`：自愈链本体，`lint.rkt`/`fixers.rkt` 与其共享（lint 把 transform 输出与原文比较判损伤）

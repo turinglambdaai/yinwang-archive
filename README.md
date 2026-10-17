@@ -8,7 +8,7 @@ Auto-crawled archive of [yinwang.org](https://www.yinwang.org) blog posts by Wan
 
 ## Features
 
-- **Racket full-stack** — crawler, linter and static site generator are one Racket package (`raco yinwangdl …`)
+- **Racket full-stack** — crawler, linter and static site generator are one Racket package (`raco yinwang-archive …`)
 - **Automated weekly crawl** via GitHub Actions (every Monday at 03:00 UTC)
 - **Incremental updates** — only downloads new or modified posts
 - **Full content archival** — posts saved as Markdown, images downloaded locally
@@ -19,10 +19,10 @@ Auto-crawled archive of [yinwang.org](https://www.yinwang.org) blog posts by Wan
 ## Project Structure
 
 ```
-yinwangdl/
+yinwang-archive/
 ├── posts/           # Markdown articles (file name = URL slug)
 ├── images/          # Post images (organized by URL slug)
-├── yinwangdl/       # Racket package: crawler, formatter, linter, site builder
+├── yinwang-archive/       # Racket package: crawler, formatter, linter, site builder
 ├── src/site/        # Static assets (styles, favicon, vendored highlight.js)
 └── index.json       # Post metadata index
 ```
@@ -36,8 +36,8 @@ yinwangdl/
 ### 1. Clone
 
 ```bash
-git clone https://github.com/turinglambdaai/yinwangdl.git
-cd yinwangdl
+git clone https://github.com/turinglambdaai/yinwang-archive.git
+cd yinwang-archive
 ```
 
 ### 2. Install the package
@@ -50,24 +50,24 @@ raco pkg install --auto --no-docs --link "$(pwd)"
 
 ```bash
 # Incremental crawl (only new/updated posts)
-raco yinwangdl crawl
+raco yinwang-archive crawl
 
 # Force re-download all posts
-raco yinwangdl crawl --force
+raco yinwang-archive crawl --force
 
 # Validate all posts (CI gate)
-raco yinwangdl lint
+raco yinwang-archive lint
 
 # Build the static site (output: dist/)
-raco yinwangdl build
+raco yinwang-archive build
 ```
 
 ### Repair tools
 
 ```bash
-raco yinwangdl fix-bold-spacing [--check|--dry-run]  # heal `** text **` emphasis
-raco yinwangdl normalize-code [--check]              # indented code -> fences
-raco yinwangdl notify                                # email new posts (dry-run default)
+raco yinwang-archive fix-bold-spacing [--check|--dry-run]  # heal `** text **` emphasis
+raco yinwang-archive normalize-code [--check]              # indented code -> fences
+raco yinwang-archive notify                                # email new posts (dry-run default)
 ```
 
 All commands accept `--root DIR` to operate on a checkout elsewhere than
