@@ -1,8 +1,0 @@
-scripts/
-node_modules/
-package*.json
-index.json
-.git/
-.github/
-.env
-README.md

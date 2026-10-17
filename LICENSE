@@ -1,8 +1,8 @@
 License Notice
 
-The code in this repository — scripts/, src/, .eleventy.js, the GitHub
-Actions workflows, and packaging files — is licensed under the MIT License
-below.
+The code in this repository — the yinwang-archive/ Racket package, src/,
+the GitHub Actions workflows, and packaging files — is licensed under the
+MIT License below.
 
 The archived blog posts under posts/ (and their images) are copyrighted by
 their author (yinwang.org) and are NOT licensed for redistribution. This is
