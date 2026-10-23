@@ -1,5 +1,9 @@
 # 项目概述
 
+## Commercial authorization decision
+
+Decision `2026-10-auth-1`: this remains a free content/community project. Do not add Permit commercial credentials, Commerce checkout, licensing accounts or a content paywall. Preserve source attribution, existing licenses and reader recovery/correction paths. Read the [portfolio authorization map](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/PORTFOLIO.md#authorization-integration-map) at each new slice and record the source/policy SHAs actually read; an updated file is not an acknowledgement by an already running agent.
+
 ## Required policy discovery at each slice
 
 Before starting the next bounded slice, refresh remote state safely and re-read
