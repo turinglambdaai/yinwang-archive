@@ -96,3 +96,10 @@ source: https://www.yinwang.org/posts/mites
 ## 商业定调与界面取向
 
 **阅读体验优先**。文章页：紧凑单行头部、768px 阅读列（~42 字/行）；**广告全线撤掉（不挂广告）**：AdSense 脚本与 meta、桌面双浮坑、移动单坑、ads.txt 已全部移除。**文章页内不放任何转化元素**（文尾公众号卡片曾试加，用户否决：突兀、图太小、生硬）。公众号转化只走两处：页脚一行链接 + `/wechat/` 专页（站长介绍 + 官方二维码 `wechat-qr.jpg` + 微信号，`build.rkt` 写出、sitemap 收录）。页脚两行极简：版权声明 + RSS/公众号链接（访问统计、站长主页、GitHub 链接、删除请求入口已裁撤——需要下架的版权方直接邮件联系站长）。阅读细节：方向键 ←/→ 切换上/下一篇（`site.rkt` 内联 JS）、`::selection`/focus-visible 主题色、引用块降噪（无底色填充）、行内代码不与链接抢色、vendor highlight.js 附带 lisp/scheme/haskell 语言包（common bundle 不含这三门，语料里有）。
+
+## 产品交付与下一步（2026-10-23）
+
+- 家族[交付标准](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/docs/PRODUCT-STANDARD.md)与[组合策略](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/PORTFOLIO.md)是共用政策；本仓具体行为以 `README.md` 为准，不复制五库依赖图。
+- 当前执行入口：[产品审查 issue](https://github.com/turinglambdaai/yinwang-archive/issues/5)。保持免费内容维护：先验证来源/修订历史、链接/图片/代码渲染和失败抓取恢复。尊重既有阅读页与版权联系约定。
+- 开工先检查干净工作树与远端，以 fast-forward-only 更新并记录 SHA；共享文件一次一个写入者，保留其他 checkout 的未提交工作。
+- 每次只完成一个可验收切片，记录 owned files、依赖 pin、命令/平台/产物证据和回滚。已实现、已发布、实机验收分别陈述；不修改 requirements 或复用旧证据来制造通过。

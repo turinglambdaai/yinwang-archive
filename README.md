@@ -137,3 +137,7 @@ the archived posts remain copyrighted by their author — see [LICENSE](LICENSE)
 
 All archived posts are copyrighted by their original author. This archive
 is kept for reading convenience; no content is sold or relicensed.
+
+## Delivery priorities (2026-10-23)
+
+The current product review issue linked from AGENTS owns the next bounded slice and its acceptance scenarios. Follow the existing product specification and the [family delivery standard](https://github.com/turinglambdaai/turinglambdaai.github.io/blob/master/docs/PRODUCT-STANDARD.md). Hardware, native-platform and live-payment gates remain explicit; this documentation update does not claim they passed.
