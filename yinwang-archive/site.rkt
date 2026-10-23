@@ -422,6 +422,9 @@ SCRIPT
           (string-append "  <nav class=\"pagination\">\n" prev next "  </nav>\n"))))
   (define content
     (string-append "<div class=\"home\">\n"
+                   (if (zero? page-number)
+                       "<p class=\"post-card-date\">免费阅读备份，版权归原作者；原文修订请以来源为准。 <a href=\"https://github.com/turinglambdaai/yinwang-archive/blob/master/docs/READING.zh-CN.md\">阅读与更正</a> · <a lang=\"en\" href=\"https://github.com/turinglambdaai/yinwang-archive/blob/master/docs/READING.md\">About this archive</a></p>\n"
+                       "")
                    (string-append* cards)
                    pagination
                    "</div>"))

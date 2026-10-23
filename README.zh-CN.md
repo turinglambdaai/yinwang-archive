@@ -6,6 +6,12 @@
 
 [English](README.md) · **中文**
 
+## 阅读入口
+
+[阅读王垠博客备份](https://yinwang.jrtx.site/) · [阅读、隐私与更正](docs/READING.zh-CN.md)
+
+这是免费阅读备份，不是作者官方网站。每周抓取属于计划任务，不保证成功，失败时可能保留旧副本。排版、图片与代码可能与原文不同，Git 历史可保留旧修订。不增加付费内容或广告。
+
 ## 功能特性
 
 - **Racket 全栈** — 爬虫、校验器、静态站生成器同属一个 Racket 包（`raco yinwang-archive …`）
